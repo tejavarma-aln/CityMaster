@@ -1,0 +1,60 @@
+[Collection:AreasXMLCollection]
+    Data Source:File XML:"Areas.xml"
+    XML Object Path: AREAOBJECT : 1 : AREACOLLECTION
+    Client Only:Yes
+ 
+[Collection:AreasXMLSUBCollection]
+    Source Collection:AreasXMLCollection
+    Compute:CITY:$CITY
+    Compute:CODE:$CODE
+    Compute:STATE:$STATE
+    Compute:DIST:$DIST
+ 
+
+[Collection:CITYNAMEXMLCOLL]
+    Title:$$LocaleString:"List Of Cities"
+    Source Collection:AreasXMLSUBCollection
+    Full Height:Yes
+    Align:Right
+    Fetch:CITY
+    Format:$CITY,40
+    Unique:$CITY
+ 
+[Collection:DISTNAMEXMLCOLL]
+    Title:$$LocaleString:"List Of Districts"
+    Source Collection:AreasXMLSUBCollection
+    Full Height:Yes
+    Align:Right
+    Fetch:DIST
+    Format:DIST,40
+    Unique:$DIST
+
+[#Part: LED Mailing Address]
+    Add:Bottom Line:At End:LEDAREALINE
+ 
+[Line:LEDAREALINE]
+    Fields:MediumPrompt,LEDCITYINP,ShortPrompt,LEDISTINP
+    Local:Field:MediumPrompt:Set as:$$LocaleString:"City"
+    Local:Field:MediumPrompt:Width:8
+    Local:Field:ShortPrompt:Set as:$$LocaleString:"District"
+    Local:Field:ShortPrompt:Width:8
+    Invisible:NOT ($$IsGroupSundryCreditors:$_PrimaryGroup or $$IsGroupSundryDebtors:$_PrimaryGroup)
+
+
+[Field:LEDCITYINP]
+    Use:Name Field
+    Storage:LEDCITYINP
+    Background:white
+    Table:CITYNAMEXMLCOLL,Not Applicable
+    Show Table:On Empty
+ 
+[Field:LEDISTINP]
+    Use:Name Field
+    Storage:LEDISTINP
+    Background:white
+    Table:DISTNAMEXMLCOLL,Not Applicable
+    Show Table:On Empty
+ 
+[System:UDF]
+    LEDCITYINP:String:1234
+    LEDISTINP:String:1677
